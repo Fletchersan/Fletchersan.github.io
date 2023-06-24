@@ -18,6 +18,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
+# writes to the docs folder
+destination: docs/
+
 title: Amogh's Blog
 email: amoghdhardiwan@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
@@ -29,10 +32,15 @@ github_username:  Fletchersan
 
 # Build settings
 theme: minima
+remote-theme: jekyll/minima
+minima:
+  skins: dark
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-remote-theme
 
 # Exclude from processing.
 # The following items will not be processed, by default.
