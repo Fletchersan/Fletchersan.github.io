@@ -1,17 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-06-24T18:29:02+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">Amogh’s Blog</title><subtitle>Amogh&apos;s blog, talks about CS, Data Engineering, Math and Life.</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2023/06/22/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2023-06-22T22:52:19+05:30</published><updated>2023-06-22T22:52:19+05:30</updated><id>http://localhost:4000/jekyll/update/2023/06/22/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2023/06/22/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://amogh.cc/feed.xml" rel="self" type="application/atom+xml" /><link href="http://amogh.cc/" rel="alternate" type="text/html" /><updated>2023-07-19T11:16:39+05:30</updated><id>http://amogh.cc/feed.xml</id><title type="html">Amogh’s Blog</title><subtitle>Amogh&apos;s blog, talks about CS, Data Engineering, Math and Life.</subtitle><entry><title type="html">Limited Direct Execution</title><link href="http://amogh.cc/ostep/os/2023/07/19/Limited-Direct-Execution.html" rel="alternate" type="text/html" title="Limited Direct Execution" /><published>2023-07-19T10:40:00+05:30</published><updated>2023-07-19T10:40:00+05:30</updated><id>http://amogh.cc/ostep/os/2023/07/19/Limited-Direct-Execution</id><content type="html" xml:base="http://amogh.cc/ostep/os/2023/07/19/Limited-Direct-Execution.html">&lt;blockquote&gt;
+  &lt;p&gt;CRUX: How To Efficiently Virtualise the CPU with Control
+OS must virtualise CPU &lt;strong&gt;efficiently&lt;/strong&gt; while still &lt;strong&gt;retaining control&lt;/strong&gt; over the system, this is done by using both software and hardware.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;Jekyll requires blog post files to be named according to the following format:&lt;/p&gt;
+&lt;p&gt;Limited Direct Execution is a representation of the solution of the Crux -&amp;gt; Direct Execution means low overhead, and limited implies that there is control retained by the OS on what is run, when and for how long.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YEAR-MONTH-DAY-title.MARKUP&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The “Direct Execution” means what you probably think it means, just directly run the program on the CPU, i.e. create an entry in the process list, load some memory for it, load the program into memory from the disk, locate it’s entry point(like the main() method), jump to it and start running the users code.&lt;/p&gt;
 
-&lt;p&gt;Where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YEAR&lt;/code&gt; is a four-digit number, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MONTH&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DAY&lt;/code&gt; are both two-digit numbers, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MARKUP&lt;/code&gt; is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;p&gt;But this process has some problems:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;How do we make sure the program we load and run does not do something we do not want and still remain &lt;strong&gt;&lt;em&gt;efficient&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;How does the OS stop a process and start running a different process, required to implement &lt;strong&gt;time sharing&lt;/strong&gt; to virtualise the CPU&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;p&gt;Therefore we have to Limit it.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;Tom&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &apos;Hi, Tom&apos; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;problem-1-restricted-operations&quot;&gt;Problem #1: Restricted Operations&lt;/h2&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
+&lt;blockquote&gt;
+  &lt;p&gt;THE CRUX: HOW TO PERFORM RESTRICTED OPERATIONS?
+A process must be able to perform I/O and some other restricted operations, but without giving the process complete control over the system. How can the OS and hardware work together to do so?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Letting the process do whatever it wants in terms of I/O and other operations is not an option.
+So the other approach is to introduce multiple processor modes:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;User Mode&lt;/strong&gt;: Code that runs in this mode is restricted, it can’t to privileged operations like issue I/O requests, doing so would result in the processor raising and exception; and the OS would kill the process&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Kernel Mode&lt;/strong&gt;: Mode in which the OS(or the kernel) runs in. In this mode code can do whatever it like.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Problem: How to execute privileged code from a user process?
+Answer: System Calls: This allows the kernel to expose key pieces of functionality to user programs, like accessing File Systems, creating and destroying processes etc. 
+To execute a system call a program must use a special Trap Instruction.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TLDR: Trap Instructions&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Simultaneously, jumps into the kernel and raises privilege level to kernel mode&lt;/li&gt;
+  &lt;li&gt;Once in the Kernel, system can perform whatever operations are needed(if they are allowed), and do the required work for the calling process.&lt;/li&gt;
+  &lt;li&gt;When Done, OS calls a special &lt;strong&gt;return-to-trap&lt;/strong&gt; instruction, which, returns into the calling user program while simultaneously reducing the privilege level back to user mode.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;problem-2-switching-between-processes&quot;&gt;Problem #2: Switching Between Processes&lt;/h2&gt;
+&lt;p&gt;Why do we want to this?
+ -&amp;gt; To virtualise the CPU&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Problem: When a process is running on a CPU, by definition the OS is not, so it can’t really do anything about it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Two approaches for this problem&lt;/p&gt;
+&lt;h3 id=&quot;co-op-approach-wait-for-system-calls&quot;&gt;Co-op Approach: Wait for system calls&lt;/h3&gt;
+&lt;p&gt;Here the OS believes in the goodness of the programmer, and takes advantage of system calls, if there are no system calls for restricted actions. It expects a yield system call.&lt;/p&gt;
+
+&lt;p&gt;Why? When a system call is initiated, the process gives up the control of the CPU to the OS, this allows the OS to make scheduling decisions. 
+If this does not happen a process could theoretically keep running for an infinite amount of time.&lt;/p&gt;
+
+&lt;p&gt;It is easy to see why this approach is a disaster(to put it mildly).&lt;/p&gt;
+
+&lt;p&gt;Note: applications also transfer control to the OS when they do something illegal. For Example, diving by zero, or trying to access memory that it shouldn’t be accessing, this generates a trap to the OS. The OS then gains control of the CPU again and will mostly likely terminate the offending process.&lt;/p&gt;
+
+&lt;h3 id=&quot;non-co-op-approach-kernel-takes-control&quot;&gt;Non Co-op Approach: Kernel Takes Control&lt;/h3&gt;
+&lt;p&gt;Usually through a hardware interrupt timer. An interrupt is raised every few milliseconds; when the interrupt is raised, the currently running process is halted, and a pre-configured i&lt;strong&gt;interrupt handler&lt;/strong&gt; in the OS runs. At this point OS has control over the CPU and can do with the process whatever it pleases, stop it, start a new one etc.
+&lt;img src=&quot;/assets/Pasted image 20230712225139.png&quot; alt=&quot;THIS IS AN IMAGE&quot; /&gt;
+The following image was taken from OSTEP.&lt;/p&gt;</content><author><name></name></author><category term="OSTEP" /><category term="OS" /><summary type="html">CRUX: How To Efficiently Virtualise the CPU with Control OS must virtualise CPU efficiently while still retaining control over the system, this is done by using both software and hardware.</summary></entry></feed>
