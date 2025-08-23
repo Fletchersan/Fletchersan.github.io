@@ -1,3 +1,5 @@
+// @use "sass:color";
+// @use "sass:math";
 /**
  * Reset some basic elements
  */
@@ -241,7 +243,7 @@ table {
     }
   }
   th, td {
-    padding: ($spacing-unit / 3) ($spacing-unit / 2);
+    padding: $spacing-unit / 3 $spacing-unit / 2;
   }
   th {
     background-color: lighten($grey-color-light, 3%);

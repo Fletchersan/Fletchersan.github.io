@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://amoghdhardiwan.com/feed.xml" rel="self" type="application/atom+xml" /><link href="http://amoghdhardiwan.com/" rel="alternate" type="text/html" /><updated>2025-08-23T20:32:00+05:30</updated><id>http://amoghdhardiwan.com/feed.xml</id><title type="html">Amogh’s Blog</title><subtitle>Amogh&apos;s blog, talks about CS, Data Engineering, Math and Life.</subtitle><entry><title type="html">Smoke Test (Secretly a socket appreciation post)</title><link href="http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html" rel="alternate" type="text/html" title="Smoke Test (Secretly a socket appreciation post)" /><published>2025-08-23T00:00:00+05:30</published><updated>2025-08-23T00:00:00+05:30</updated><id>http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test</id><content type="html" xml:base="http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html"><![CDATA[<h1 id="the-problem"><a href="https://protohackers.com/problem/0">The problem</a></h1>
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Smoke Test (Secretly a socket appreciation post) | Amogh’s Blog</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Smoke Test (Secretly a socket appreciation post)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A deep dive into building a TCP echo server from scratch, understanding sockets, and implementing the RFC 862 echo service in Go." />
+<meta property="og:description" content="A deep dive into building a TCP echo server from scratch, understanding sockets, and implementing the RFC 862 echo service in Go." />
+<link rel="canonical" href="http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html" />
+<meta property="og:url" content="http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html" />
+<meta property="og:site_name" content="Amogh’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-08-23T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Smoke Test (Secretly a socket appreciation post)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-08-23T00:00:00+05:30","datePublished":"2025-08-23T00:00:00+05:30","description":"A deep dive into building a TCP echo server from scratch, understanding sockets, and implementing the RFC 862 echo service in Go.","headline":"Smoke Test (Secretly a socket appreciation post)","mainEntityOfPage":{"@type":"WebPage","@id":"http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html"},"url":"http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"><link type="application/atom+xml" rel="alternate" href="http://amoghdhardiwan.com/feed.xml" title="Amogh&apos;s Blog" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Smoke Test (Secretly a socket appreciation post) | Amogh’s Blog</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Smoke Test (Secretly a socket appreciation post)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A deep dive into building a TCP echo server from scratch, understanding sockets, and implementing the RFC 862 echo service in Go." />
+<meta property="og:description" content="A deep dive into building a TCP echo server from scratch, understanding sockets, and implementing the RFC 862 echo service in Go." />
+<link rel="canonical" href="http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html" />
+<meta property="og:url" content="http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html" />
+<meta property="og:site_name" content="Amogh’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-08-23T00:00:00+05:30" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Smoke Test (Secretly a socket appreciation post)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-08-23T00:00:00+05:30","datePublished":"2025-08-23T00:00:00+05:30","description":"A deep dive into building a TCP echo server from scratch, understanding sockets, and implementing the RFC 862 echo service in Go.","headline":"Smoke Test (Secretly a socket appreciation post)","mainEntityOfPage":{"@type":"WebPage","@id":"http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html"},"url":"http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html"}</script>
+<!-- End Jekyll SEO tag -->
+</head>
+  <body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Amogh&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Smoke Test (Secretly a socket appreciation post)</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2025-08-23T00:00:00+05:30" itemprop="datePublished">Aug 23, 2025
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h1 id="the-problem"><a href="https://protohackers.com/problem/0">The problem</a></h1>
 <blockquote>
   <p>Create a TCP echo server that can handle multiple connections.</p>
   <h3 id="understanding-the-problem">Understanding the problem</h3>
@@ -246,71 +313,36 @@ Sadly for the first step my search ends here, the documentation had exactly what
 <ol>
   <li>https://www.gnu.org/software/libc/manual/html_node/index.html</li>
   <li>https://gist.github.com/vomnes/be42868583db5812b7266b2f45262dca</li>
-</ol>]]></content><author><name></name></author><category term="networking" /><category term="go" /><category term="tcp" /><category term="sockets" /><category term="protohackers" /><category term="tcp-echo" /><category term="networking" /><category term="go-programming" /><category term="system-programming" /><summary type="html"><![CDATA[A deep dive into building a TCP echo server from scratch, understanding sockets, and implementing the RFC 862 echo service in Go.]]></summary></entry><entry><title type="html">Limited Direct Execution</title><link href="http://amoghdhardiwan.com/ostep/os/2023/07/19/Limited-Direct-Execution.html" rel="alternate" type="text/html" title="Limited Direct Execution" /><published>2023-07-19T10:40:00+05:30</published><updated>2023-07-19T10:40:00+05:30</updated><id>http://amoghdhardiwan.com/ostep/os/2023/07/19/Limited-Direct-Execution</id><content type="html" xml:base="http://amoghdhardiwan.com/ostep/os/2023/07/19/Limited-Direct-Execution.html"><![CDATA[<blockquote>
-  <p>CRUX: How To Efficiently Virtualise the CPU with Control
-OS must virtualise CPU <strong>efficiently</strong> while still <strong>retaining control</strong> over the system, this is done by using both software and hardware.</p>
-</blockquote>
-
-<p>Limited Direct Execution is a representation of the solution of the Crux -&gt; Direct Execution means low overhead, and limited implies that there is control retained by the OS on what is run, when and for how long.</p>
-
-<p>The “Direct Execution” means what you probably think it means, just directly run the program on the CPU, i.e. create an entry in the process list, load some memory for it, load the program into memory from the disk, locate it’s entry point(like the main() method), jump to it and start running the users code.</p>
-
-<p>But this process has some problems:</p>
-<ol>
-  <li>How do we make sure the program we load and run does not do something we do not want and still remain <strong><em>efficient</em></strong></li>
-  <li>How does the OS stop a process and start running a different process, required to implement <strong>time sharing</strong> to virtualise the CPU</li>
 </ol>
 
-<p>Therefore we have to Limit it.</p>
+  </div><a class="u-url" href="/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html" hidden></a>
+</article>
 
-<h2 id="problem-1-restricted-operations">Problem #1: Restricted Operations</h2>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
 
-<blockquote>
-  <p>THE CRUX: HOW TO PERFORM RESTRICTED OPERATIONS?
-A process must be able to perform I/O and some other restricted operations, but without giving the process complete control over the system. How can the OS and hardware work together to do so?</p>
-</blockquote>
+  <div class="wrapper">
 
-<p>Letting the process do whatever it wants in terms of I/O and other operations is not an option.
-So the other approach is to introduce multiple processor modes:</p>
-<ol>
-  <li><strong>User Mode</strong>: Code that runs in this mode is restricted, it can’t to privileged operations like issue I/O requests, doing so would result in the processor raising and exception; and the OS would kill the process</li>
-  <li><strong>Kernel Mode</strong>: Mode in which the OS(or the kernel) runs in. In this mode code can do whatever it like.</li>
-</ol>
+    <h2 class="footer-heading">Amogh&#39;s Blog</h2>
 
-<blockquote>
-  <p>Problem: How to execute privileged code from a user process?
-Answer: System Calls: This allows the kernel to expose key pieces of functionality to user programs, like accessing File Systems, creating and destroying processes etc. 
-To execute a system call a program must use a special Trap Instruction.</p>
-</blockquote>
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Amogh&#39;s Blog</li><li><a class="u-email" href="mailto:amoghdhardiwan@gmail.com">amoghdhardiwan@gmail.com</a></li></ul>
+      </div>
 
-<p><br /></p>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/Fletchersan"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">Fletchersan</span></a></li><li><a href="https://www.twitter.com/amoghdhardiwan"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">amoghdhardiwan</span></a></li></ul>
+</div>
 
-<p><strong>TLDR: Trap Instructions</strong></p>
-<ol>
-  <li>Simultaneously, jumps into the kernel and raises privilege level to kernel mode</li>
-  <li>Once in the Kernel, system can perform whatever operations are needed(if they are allowed), and do the required work for the calling process.</li>
-  <li>When Done, OS calls a special <strong>return-to-trap</strong> instruction, which, returns into the calling user program while simultaneously reducing the privilege level back to user mode.</li>
-</ol>
+      <div class="footer-col footer-col-3">
+        <p>Amogh&#39;s blog, talks about CS, Data Engineering, Math and Life.</p>
+      </div>
+    </div>
 
-<h2 id="problem-2-switching-between-processes">Problem #2: Switching Between Processes</h2>
-<p>Why do we want to this?
- -&gt; To virtualise the CPU</p>
-<blockquote>
-  <p>Problem: When a process is running on a CPU, by definition the OS is not, so it can’t really do anything about it.</p>
-</blockquote>
+  </div>
 
-<p>Two approaches for this problem</p>
-<h3 id="co-op-approach-wait-for-system-calls">Co-op Approach: Wait for system calls</h3>
-<p>Here the OS believes in the goodness of the programmer, and takes advantage of system calls, if there are no system calls for restricted actions. It expects a yield system call.</p>
+</footer>
+</body>
 
-<p>Why? When a system call is initiated, the process gives up the control of the CPU to the OS, this allows the OS to make scheduling decisions. 
-If this does not happen a process could theoretically keep running for an infinite amount of time.</p>
-
-<p>It is easy to see why this approach is a disaster(to put it mildly).</p>
-
-<p>Note: applications also transfer control to the OS when they do something illegal. For Example, diving by zero, or trying to access memory that it shouldn’t be accessing, this generates a trap to the OS. The OS then gains control of the CPU again and will mostly likely terminate the offending process.</p>
-
-<h3 id="non-co-op-approach-kernel-takes-control">Non Co-op Approach: Kernel Takes Control</h3>
-<p>Usually through a hardware interrupt timer. An interrupt is raised every few milliseconds; when the interrupt is raised, the currently running process is halted, and a pre-configured i<strong>interrupt handler</strong> in the OS runs. At this point OS has control over the CPU and can do with the process whatever it pleases, stop it, start a new one etc.
-<img src="/assets/Pasted image 20230712225139.png" alt="THIS IS AN IMAGE" />
-The following image was taken from OSTEP.</p>]]></content><author><name></name></author><category term="OSTEP" /><category term="OS" /><summary type="html"><![CDATA[CRUX: How To Efficiently Virtualise the CPU with Control OS must virtualise CPU efficiently while still retaining control over the system, this is done by using both software and hardware.]]></summary></entry></feed>
+</html>

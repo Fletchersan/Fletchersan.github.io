@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://amogh.cc/ostep/os/2023/07/19/Limited-Direct-Execution.html</loc>
+<loc>http://amoghdhardiwan.com/ostep/os/2023/07/19/Limited-Direct-Execution.html</loc>
 <lastmod>2023-07-19T10:40:00+05:30</lastmod>
 </url>
 <url>
-<loc>http://amogh.cc/about/</loc>
+<loc>http://amoghdhardiwan.com/networking/go/tcp/sockets/protohackers/2025/08/23/Smoke-Test.html</loc>
+<lastmod>2025-08-23T00:00:00+05:30</lastmod>
 </url>
 <url>
-<loc>http://amogh.cc/</loc>
+<loc>http://amoghdhardiwan.com/about/</loc>
 </url>
 <url>
-<loc>http://amogh.cc/about/</loc>
-<lastmod>2023-06-24T17:05:28+05:30</lastmod>
+<loc>http://amoghdhardiwan.com/</loc>
 </url>
 <url>
-<loc>http://amogh.cc/jekyll/update/2023/06/22/welcome-to-jekyll.html</loc>
+<loc>http://amoghdhardiwan.com/jekyll/update/2023/06/22/welcome-to-jekyll.html</loc>
 <lastmod>2023-06-24T17:05:28+05:30</lastmod>
 </url>
 </urlset>
